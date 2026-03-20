@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Money Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <h1>Money Tracker</h1>
+    <div class="column__flex">
+        <div class="left__column">
+            <h2>Учет расходов</h2>
+            <div class="input__flex">
+                <input class="input__number js-input__sum" type="number" id="1"
+                placeholder="Введите сумму">
+                <p class="input__text">руб.</p>
+                <select class="input__category js-input__category" id="2">
+                    <option value="Транспорт">Транспорт</option>
+                    <option value="Кафе и рестораны">Кафе и рестораны</option>
+                    <option value="Аптека">Аптека</option>
+                    <option value="Развлечения">Развлечения</option>
+                </select>
+            </div>
+            <div class="money__flex">
+                <div class="pos">
+                    <h3>Лимит: <span class="text js-limit">10000</span><span class="text"> руб.</span></h3>
+                    <button class="popup__btn js-btn"></button>
+                </div>
+                <h3>Всего: <span class="text js-sum">0</span><span class="text"> руб.</span></h3>
+                <h3>Статус: <span class="text__green js-status">Все хорошо.</span></h3>
+            </div>
+            <button class="reset__btn js-reset__btn">Сбросить расходы</button>
+            <div class="popup js-popup ">
+                <div class="popup__content js-popup__content">
+                    <button class="popup__close-btn js-popup__close-btn"></button>
+                    <h2 class="popup__title">Новый лимит</h2>
+                    <div class="popup__flex">
+                        <div class="popup__container"> 
+                            <input class="input__number js-input__number" type="number" id="1"
+                            placeholder="Введите сумму">
+                            <p class="input__text input__text__popup">руб.</p>
+                        </div>
+                        <button class="add__btn js-number-add__btn">Задать лимит</button>
+                    </div>      
+                </div>
+            </div>
+        </div>
+        <div class="right__column">
+            <button class="add__btn js-add__btn">Добавить</button>
+            <h3>История:</h3>
+            <div class="history js-history"></div>
+        </div>
+    </div>   
+    <script src="index.js"></script>
+    <script src="popup.js"></script>
+</body>
+</html>
