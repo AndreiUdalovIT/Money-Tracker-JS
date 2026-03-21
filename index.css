@@ -106,7 +106,7 @@ h3 {
     right: -70px;
     width: 42px;
     height: 42px;
-    background-image: url(../popup-btn.png);
+    background-image: url(popup-btn.png);
     background-color: #fff;
 }
 
@@ -184,7 +184,7 @@ h3 {
     right: 35px;
     width: 30px;
     height: 30px;
-    background-image: url(/close-btn.png);
+    background-image: url(close-btn.png);
     background-color: #fff;
 }
 
