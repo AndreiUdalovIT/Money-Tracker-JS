@@ -18,62 +18,75 @@ const badStatus = `Все плохо`;
 let expenses = [];
 let sum = 0;
 
-addBtnNode.addEventListener('click', function() {
-    getValue();
-    clearInput();
-    sum = calculateSum(expenses);
-    
+
+const clickAddBtn = () => {
+    if (!checkValue(inputSumNode)) {
+        return;
+    } else {
+        getValue();
+        clearInput();
+        sum = calculateSum(expenses);
+        render();
+    }
+}
+
+const clickResetBtn = () => {
+    resetAll();
+    renderStatus(sum);
+}
+
+const addNumberBtn = () => {
+    if (!checkValue(numberNode)) {
+        return;
+    } else {
+        editLimit();
+        renderStatus(sum);
+    }
+}
+
+const render = () => {
     renderSum(sum);
     renderHistory(expenses);
     renderStatus(sum);
-});
+}
 
-resetBtnNode.addEventListener('click', function () {
-    resetAll();
-    renderStatus(sum);
-});
-
-numberAddBtnNode.addEventListener ('click', function () {
-    editLimit();
-    renderStatus(sum);
-})
-
-
-function getValue() {
+const getValue = () => {
     let inputCategoryValue = inputCategoryNode.value;
     let inputSumValue = parseInt(inputSumNode.value);
     expenses.push({
         sum: inputSumValue,
         category: inputCategoryValue,
-});}
-
-function clearInput() {
+    });
+    const expensesString = JSON.stringify(expenses);
+    localStorage.setItem('history', expensesString);
+}
+const clearInput = () => {
     inputSumNode.value = '';
 }
 
-function calculateSum(expenses) {
+const calculateSum = (expenses) => {
     let sumB = 0;
     expenses.forEach(element => {
         sumB += element.sum;
-});
+    });
     return sumB;
 }
 
-function renderSum(sum) {
+const renderSum = (sum) => {
     sumNode.innerText = `${sum}`; 
 }
 
-function renderHistory(expenses) {
+const renderHistory = (expenses) => {
     let historyHTML = '';
 
     expenses.forEach(element => {
         historyHTML += `<li>${element.sum} ${currency} - ${element.category}</li>`;
-});
+    });
 
     historyNode.innerHTML = `<ol>${historyHTML}</ol>`;
 }
 
-function renderStatus(sum) {
+const renderStatus = (sum) => {    
     let limitNumber = parseInt(limitNode.textContent);
     let sumNumber = sum;
         
@@ -84,18 +97,62 @@ function renderStatus(sum) {
         let difference = sumNumber - limitNumber;
         statusNode.innerText = `${badStatus} (-${difference}) ${currency}`;
         statusNode.classList.add('text__red');
-
     }  
 }
 
-function resetAll() {
+const resetAll = () => {
     expenses = [];
     historyNode.innerHTML = '';
     sum = 0;
     sumNode.innerText = `0`;
+    localStorage.removeItem('history');
 }
 
-function editLimit() {
+const editLimit = () => {
     let numberValue = numberNode.value;
     limitNode.innerText = numberValue;
+    localStorage.setItem('limit', numberValue);
 }
+
+const checkValue = (inputSumNode) => {
+    let valueCheck = parseInt(inputSumNode.value);
+    return valueCheck > 0; 
+}
+
+const getLimitFromStorage = () => {
+    const limitFromStorage = parseInt(localStorage.getItem('limit'));
+    if (!limitFromStorage) {
+        return;
+    } else {
+        limitNode.innerText = limitFromStorage;
+    }
+}
+
+const getHistoryFromStorage = () => {
+    const HistoryFromStorageString = localStorage.getItem('history')
+    const HistoryFromStorage = JSON.parse(HistoryFromStorageString);
+    if (!HistoryFromStorage) {
+        return;
+    } else {
+        HistoryFromStorage.forEach(element => {
+            expenses.push(element); 
+        });
+    }
+}
+
+const init = () => {
+    getLimitFromStorage();
+    getHistoryFromStorage();
+    sum = calculateSum(expenses);
+    render();
+}
+
+init();
+
+addBtnNode.addEventListener('click', clickAddBtn);
+
+resetBtnNode.addEventListener('click', clickResetBtn);
+
+numberAddBtnNode.addEventListener ('click', addNumberBtn);
+
+

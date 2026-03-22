@@ -189,6 +189,9 @@ h3 {
 }
 
 .history {
-    padding-left: 40px;
     margin-top: 20px;
+}
+
+ol {
+    list-style-position: inside;
 }
